@@ -1,77 +1,116 @@
-Tema: Biblioteca Escolar — Empréstimos com Regras Diferentes
+# Sistema de Biblioteca Escolar — Controle de Empréstimos
 
-Você foi contratado para implementar um sistema de linha de comando (console) para controlar empréstimos de uma biblioteca escolar. O sistema será usado por funcionários com pouca familiaridade técnica, então deve ser simples, robusto e tolerante a entradas inválidas.
+## 📚 Descrição
 
-A biblioteca possui:
+Este é um sistema de linha de comando (console) para controle de empréstimos em uma biblioteca escolar. O projeto foi desenvolvido para ser simples, robusto e tolerante a entradas inválidas, focado na usabilidade por funcionários com pouca familiaridade técnica.
 
-Pessoas que realizam empréstimos (há pelo menos dois perfis diferentes, com regras distintas de limite e prazo).
+## 🎯 Funcionalidades
 
-Itens que podem ser emprestados (há pelo menos dois tipos diferentes, com regras distintas de multa/atraso e/ou tratamento).
+O sistema contempla as seguintes entidades principais:
 
-Empréstimos, que conectam uma pessoa e um item, registrando datas e situação do empréstimo.
+- **Pessoas:** diferentes perfis (com diferentes limites e prazos de empréstimo).
+- **Itens:** diferentes tipos (com regras distintas de multa por atraso e/ou tratamento especial).
+- **Empréstimos:** conectam uma pessoa e um item, com registro de datas e situação.
 
-Regras funcionais (o que o sistema deve fazer)
+### 📝 Cadastro e Consulta
 
-Cadastro e consulta
+- Cadastro de pessoas (com identificador único, nome e contato).
+- Cadastro de itens (com identificador único, título e dados complementares).
+- Listagem de pessoas e itens.
+- Busca de itens por parte do título (exemplo: buscar "harry" encontra "Harry Potter…").
 
-Permitir cadastrar pessoas (com identificador único, nome e contato).
+### 🔄 Empréstimo
 
-Permitir cadastrar itens (com identificador único, título e dados complementares).
+- Possibilidade de realizar empréstimos informando quem e qual item.
+- O empréstimo só pode ocorrer se todas estas condições forem atendidas:
+  - A pessoa existir.
+  - O item existir.
+  - O item estiver disponível.
+  - A pessoa não tiver excedido seu limite de empréstimos em aberto.
+- Registro da data do empréstimo e da data prevista de devolução (de acordo com o perfil da pessoa).
 
-Permitir listar pessoas e itens.
+### ↩️ Devolução
 
-Permitir buscar itens por parte do título (ex.: “harry” encontra “Harry Potter…”).
+- Permitir devolução de item, informando qual item está sendo devolvido.
+- Ao devolver um item:
+  - Encerrar o empréstimo, registrando a data real de devolução.
+  - Tornar o item disponível novamente.
+  - Calcular multa por atraso, se houver, conforme o tipo do item.
 
-Empréstimo
+### 📊 Relatórios
 
-Permitir realizar empréstimo informando quem e qual item.
+- Listar itens disponíveis.
+- Listar itens emprestados.
+- Listar empréstimos em aberto, ordenados pela data prevista de devolução (primeiros a vencer no topo).
+- Mostrar um resumo: total de empréstimos ativos e quantidade de empréstimos atrasados.
 
-O empréstimo só pode acontecer se:
+## ✨ Qualidade e Extensibilidade
 
-A pessoa existir.
+- O sistema roda em loop, exibindo um menu interativo, até o usuário escolher sair.
+- Evita estados inválidos (como campos vazios, valores negativos, etc.).
+- **Sistema extensível:** permite fácil adição de novos perfis de pessoa ou tipos de item com regras próprias, sem necessidade de grandes modificações no código.
+- Todos os dados são armazenados em memória (não é necessário salvar em arquivo ou banco de dados).
+- Fique livre para definir como representar identificadores, regras e validações, desde que o funcionamento esteja correto.
 
-O item existir.
+## 🚀 Como Executar
 
-O item estiver disponível.
+1. Clone este repositório:
+   ```sh
+   git clone https://github.com/profYuriSouza/projeto_biblioteca_dart_turmaA.git
+   cd projeto_biblioteca_dart_turmaA
+   ```
 
-A pessoa não tiver excedido seu limite de empréstimos em aberto.
+2. Certifique-se de ter o [Dart SDK](https://dart.dev/get-dart) instalado.
 
-Ao emprestar, registrar:
+3. Execute o programa via terminal:
+   ```sh
+   dart run
+   ```
 
-data do empréstimo,
+O sistema apresentará um menu interativo para todas as operações descritas acima.
 
-data prevista de devolução (depende do perfil da pessoa).
+## 📋 Estrutura do Projeto
 
-Devolução
+```
+projeto_biblioteca_dart_turmaA/
+├── bin/
+│   └── main.dart          # Ponto de entrada da aplicação
+├── lib/
+│   ├── models/            # Classes de modelos (Pessoa, Item, Empréstimo)
+│   ├── services/          # Lógica de negócios e regras
+│   └── ui/                # Interface com o usuário (menus, inputs)
+├── pubspec.yaml           # Dependências do projeto
+└── README.md              # Este arquivo
+```
 
-Permitir devolver um item (informando qual item está sendo devolvido).
+## 🛠️ Tecnologias Utilizadas
 
-Ao devolver, o sistema deve:
+- **Dart:** Linguagem de programação
+- **Console I/O:** Entrada e saída em linha de comando
 
-encerrar o empréstimo (registrar data de devolução),
+## 📖 Exemplo de Uso
 
-tornar o item novamente disponível,
+Após executar o programa, você verá um menu como:
 
-calcular multa, se houver atraso (o cálculo depende do tipo do item).
+```
+=== SISTEMA DE BIBLIOTECA ESCOLAR ===
+1. Cadastrar Pessoa
+2. Cadastrar Item
+3. Realizar Empréstimo
+4. Devolver Item
+5. Listar Relatórios
+6. Sair
+Escolha uma opção: 
+```
 
-Relatórios
+## 🎓 Trabalho Acadêmico
 
-Listar itens disponíveis.
+Este é um projeto da **Turma A** desenvolvido como exercício prático de programação em Dart, focando em:
+- Modelagem de objetos
+- Tratamento de erros e validações
+- Design extensível e reutilizável
+- Interface amigável para usuários não-técnicos
 
-Listar itens emprestados.
+---
 
-Listar empréstimos em aberto, ordenados por data prevista (primeiros a vencer no topo).
-
-Mostrar um resumo: quantos empréstimos ativos existem e quantos estão atrasados.
-
-Regras de qualidade (como você deve implementar)
-
-O sistema deve rodar em loop com um menu até o usuário escolher sair.
-
-O código deve evitar estados inválidos (por exemplo: e-mail/contato vazio, título vazio, ano negativo, etc.).
-
-O sistema deve ser extensível: no futuro pode surgir um novo perfil de pessoa ou um novo tipo de item com regras próprias, e isso não deve exigir “refazer tudo”.
-
-Você pode armazenar tudo apenas em memória (não precisa salvar em arquivo nem banco).
-
-Fique livre para escolher como representar identificadores, regras e validações, desde que o comportamento esteja correto.
+**Desenvolvido com ❤️ para a disciplina de Programação em Dart**
